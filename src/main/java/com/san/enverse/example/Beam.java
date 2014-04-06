@@ -9,7 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name = "beam", catalog = "test")
 public class Beam implements java.io.Serializable{
 	

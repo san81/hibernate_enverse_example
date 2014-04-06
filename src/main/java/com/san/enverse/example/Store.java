@@ -17,7 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.envers.Audited;
+
 @Entity
+@Audited
 @Table(name = "store", catalog = "test", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "store_name") })
 public class Store implements java.io.Serializable {
