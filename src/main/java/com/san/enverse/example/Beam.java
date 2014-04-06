@@ -60,6 +60,8 @@ public class Beam implements java.io.Serializable{
 		this.store = store;
 	}
 	
-	
+	public String toString(){
+		return "{ Beam Id: "+beamId+" ToolCatGrp: "+beamToolCat+" Of Store "+store.getStoreName()+" }";
+	}
 	
 }

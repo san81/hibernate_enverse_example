@@ -1,6 +1,10 @@
 package com.san.enverse.example;
 
+import java.util.Set;
+
 import org.hibernate.Session;
+import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.AuditReaderFactory;
 
 import com.san.enverse.persistence.HibernateUtil;
 
@@ -16,8 +20,43 @@ public class App
     {
     	System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
-        
+        modifyEntities(session);
+        readAuditEntries(session);
+        session.close();
+    }
+    
+    public static void modifyEntities(Session session){
+    	session.beginTransaction();
+        //saveNewRecords(session);
+        Store store5=(Store) session.load(Store.class, 5);
+        Set<Beam> beams=store5.getBeams();
+        store5.setStoreName("NewStore-five");
+        int i=10;
+        for(Beam beam:beams){
+        	System.out.println(beam);
+        	beam.setBeamToolCat("Trailers"+i++);
+        	break;
+        	
+        }
+        session.saveOrUpdate(store5);
+        session.getTransaction().commit();
+    }
+    
+    public static void readAuditEntries(Session session){
+    	System.out.println("Reading Audit entries");
+       
         session.beginTransaction();
+        AuditReader reader = AuditReaderFactory.get(session);
+        Store store = reader.find(Store.class, 5, 3);
+        System.out.println(store);
+        store = reader.find(Store.class, 5, 1);
+        System.out.println(store);
+        session.getTransaction().commit();       
+    	
+    }
+    
+    public static void saveNewRecords(Session session){
+    	session.beginTransaction();
         Store store = new Store();
         
         store.setStoreName("Store-"+System.currentTimeMillis());
@@ -30,12 +69,11 @@ public class App
         store.addBeam(beam2);
         
         session.save(store);
-       
+        session.getTransaction().commit();
         
         
         //session.delete(stock);
         
-        session.getTransaction().commit();
-        session.close();
+        
     }
 }

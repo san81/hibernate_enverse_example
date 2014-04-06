@@ -76,4 +76,13 @@ public class Store implements java.io.Serializable {
 		this.beams.add(beam);
 	}
 	
+	public String toString(){
+		StringBuffer str=new StringBuffer("Store number: ").append(storeNumber).append(" StoreName: ").append(storeName).append(" Beams [");
+		for(Beam beam:beams){
+			str.append(beam);
+		}
+		str.append("]");
+		return str.toString();
+	}
+	
 }
