@@ -31,7 +31,7 @@ public class App
         Store store5=(Store) session.load(Store.class, 5);
         Set<Beam> beams=store5.getBeams();
         store5.setStoreName("NewStore-five");
-        int i=10;
+        long i=System.currentTimeMillis();
         for(Beam beam:beams){
         	System.out.println(beam);
         	beam.setBeamToolCat("Trailers"+i++);

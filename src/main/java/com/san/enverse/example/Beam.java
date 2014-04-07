@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 
@@ -27,6 +28,9 @@ public class Beam implements java.io.Serializable{
 	@ManyToOne
     @JoinColumn(name="store_number")
     private Store store;
+	
+	@Version
+	private Integer version;
 	
 	public Beam(){ }
 	

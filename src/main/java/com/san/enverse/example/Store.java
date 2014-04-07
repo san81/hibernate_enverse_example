@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import org.hibernate.envers.Audited;
 
@@ -32,6 +33,9 @@ public class Store implements java.io.Serializable {
 	
 	@Column(name = "store_name", unique = false, nullable = true)
 	private String storeName;
+	
+	@Version
+	private Integer version;
 	
 	@OneToMany(mappedBy="store", cascade=CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Beam.class)
     private Set<Beam> beams=new LinkedHashSet<Beam>();
@@ -76,6 +80,14 @@ public class Store implements java.io.Serializable {
 		this.beams.add(beam);
 	}
 	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public String toString(){
 		StringBuffer str=new StringBuffer("Store number: ").append(storeNumber).append(" StoreName: ").append(storeName).append(" Beams [");
 		for(Beam beam:beams){
