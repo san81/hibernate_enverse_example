@@ -5,19 +5,18 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
+import org.hibernate.envers.AuditJoinTable;
 import org.hibernate.envers.Audited;
 
 @Entity
@@ -37,7 +36,9 @@ public class Store implements java.io.Serializable {
 	@Version
 	private Integer version;
 	
-	@OneToMany(mappedBy="store", cascade=CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Beam.class)
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER, targetEntity=Beam.class)
+	@JoinColumn(name = "store")
+	@AuditJoinTable(name="Store_Beam_AUD")
     private Set<Beam> beams=new LinkedHashSet<Beam>();
 	
 	public Store(){

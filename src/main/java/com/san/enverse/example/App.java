@@ -18,7 +18,7 @@ public class App
 {
     public static void main( String[] args )
     {
-    	System.out.println("Maven + Hibernate + MySQL");
+    	    System.out.println("Maven + Hibernate + MySQL");
         Session session = HibernateUtil.getSessionFactory().openSession();
         modifyEntities(session);
         readAuditEntries(session);
@@ -33,11 +33,14 @@ public class App
         store5.setStoreName("NewStore-five");
         long i=System.currentTimeMillis();
         for(Beam beam:beams){
-        	System.out.println(beam);
-        	beam.setBeamToolCat("Trailers"+i++);
-        	break;
-        	
+            	System.out.println(beam);
+            	beam.setBeamToolCat("Trailers"+i++);
+            	break;
         }
+        Beam newBeam  = new Beam();
+        newBeam.setStore(store5);
+        newBeam.setBeamToolCat("Carpet Cleaners "+i++);
+        beams.add(newBeam);
         session.saveOrUpdate(store5);
         session.getTransaction().commit();
     }
@@ -47,9 +50,9 @@ public class App
        
         session.beginTransaction();
         AuditReader reader = AuditReaderFactory.get(session);
-        Store store = reader.find(Store.class, 5, 3);
+        Store store = reader.find(Store.class, 5, 13);
         System.out.println(store);
-        store = reader.find(Store.class, 5, 1);
+        store = reader.find(Store.class, 5, 12);
         System.out.println(store);
         session.getTransaction().commit();       
     	
